@@ -24,7 +24,7 @@ const charitySchema = new Schema({
     },
     bio: String,
     links: [String],
-    projects: [{
+    id_projects: [{
         type: Schema.Types.ObjectId,
         ref: "Project"
     }],

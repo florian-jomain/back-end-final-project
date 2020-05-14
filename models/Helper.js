@@ -24,13 +24,13 @@ const helperSchema = new Schema({
     },
     skills: [{
         type: Schema.Types.ObjectId,
-        ref: "Tags"
+        ref: "Tag"
     }],
     bio: String,
     location: String,
     phone: String,
     links: [String],
-    projects: [{
+    id_projects: [{
         type: Schema.Types.ObjectId,
         ref: "Project"
     }],

@@ -14,16 +14,23 @@ const cors = require("cors");
 /**
  * Middlewares
  */
-const corsOptions = { origin: process.env.FRONTEND_URL, credentials: true };
+const corsOptions = {
+  origin: process.env.FRONTEND_URL,
+  credentials: true
+};
 app.use(cors(corsOptions));
 app.use(logger("dev")); // This logs HTTP reponses in the console.
 app.use(express.json()); // Access data sent as json @req.body
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({
+  extended: false
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
   session({
-    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    store: new MongoStore({
+      mongooseConnection: mongoose.connection
+    }),
     secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true,
@@ -42,8 +49,14 @@ app.use(function (req, res, next) {
 
 const indexRouter = require("./routes/index");
 const authRouter = require("./routes/auth");
+const projectRouter = require("./routes/project");
+const tagRouter = require("./routes/tag");
+const profileRouter = require("./routes/profile");
 
 app.use("/", indexRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/projects", projectRouter);
+app.use("/api/tags", tagRouter);
+app.use("/api", profileRouter);
 
 module.exports = app;

@@ -14,24 +14,24 @@ const projectSchema = new Schema({
         type: String,
         required: true
     },
-    tags: {
+    id_tags: [{
         type: Schema.Types.ObjectId,
-        ref: "Tags",
+        ref: "Tag",
         required: true
-    },
+    }],
     category: {
         type: String,
         required: true,
         enum: ["Equality", "Poverty", "Environment", "Animals", "Arts", "Education", "Covid-19"]
     },
-    owner: {
+    id_owner: {
         type: Schema.Types.ObjectId,
         ref: "Charity"
     },
-    teamMembers: {
+    id_teamMembers: [{
         type: Schema.Types.ObjectId,
         ref: "Helper"
-    },
+    }],
     location: String,
     frequency: {
         type: String,

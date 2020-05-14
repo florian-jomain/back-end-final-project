@@ -104,7 +104,7 @@ router.post("/signup/helper", upload.single("image"), (req, res, next) => {
   })
 })
 
-router.post("/signup/charity", (req, res, next) => {
+router.post("/signup/charity", upload.single("image"), (req, res, next) => {
   const {
     email,
     password,
