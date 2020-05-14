@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const User = require("../models/User");
 const Helper = require('../models/Helper');
 const Charity = require('../models/Charity');
 const Project = require('../models/Project');
@@ -60,11 +59,13 @@ router.post("/signup/helper", upload.single("image"), (req, res, next) => {
   const {
     email,
     password,
+    username,
     name
   } = req.body;
   const newHelper = {
     email,
     password,
+    username,
     name
   };
 
@@ -74,35 +75,46 @@ router.post("/signup/helper", upload.single("image"), (req, res, next) => {
 
   Helper.findOne({
     email,
-  }).then((userDocument) => {
-    if (userDocument) {
+  }).then((helperDocument) => {
+    if (helperDocument) {
       return res.status(400).json({
         message: "Email already taken",
       });
     }
 
-    const hashedPassword = bcrypt.hashSync(password, salt);
-    newHelper.password = hashedPassword;
-    console.log(newHelper);
+    Helper.findOne({
+      username,
+    }).then((helperDocument) => {
+      if (helperDocument) {
+        return res.status(400).json({
+          message: "Username already taken",
+        });
+      }
 
-    Helper.create(newHelper).then((newHelperDocument) => {
-      const helperObj = newHelperDocument.toObject();
-      delete helperObj.password;
-      req.session.currentUser = helperObj;
-      res.status(201).json(helperObj);
-    });
-  });
-});
+      const hashedPassword = bcrypt.hashSync(password, salt);
+      newHelper.password = hashedPassword;
+
+      Helper.create(newHelper).then((newHelperDocument) => {
+        const helperObj = newHelperDocument.toObject();
+        delete helperObj.password;
+        req.session.currentUser = helperObj;
+        res.status(201).json(helperObj);
+      })
+    })
+  })
+})
 
 router.post("/signup/charity", (req, res, next) => {
   const {
     email,
     password,
+    username,
     name
   } = req.body;
   const newCharity = {
     email,
     password,
+    username,
     name
   };
 
@@ -112,12 +124,22 @@ router.post("/signup/charity", (req, res, next) => {
 
   Charity.findOne({
     email,
-  }).then((userDocument) => {
-    if (userDocument) {
+  }).then((charityDocument) => {
+    if (charityDocument) {
       return res.status(400).json({
         message: "Email already taken",
       });
     }
+
+    Charity.findOne({
+      username,
+    }).then((charityDocument) => {
+      if (charityDocument) {
+        return res.status(400).json({
+          message: "Username already taken",
+        });
+      }
+    })
 
     const hashedPassword = bcrypt.hashSync(password, salt);
     newCharity.password = hashedPassword;
