@@ -16,7 +16,6 @@ const charitySchema = new Schema({
     },
     image: {
         type: String,
-        required: true,
         default: ""
     },
     bio: String,

@@ -16,7 +16,6 @@ const helperSchema = new Schema({
     },
     image: {
         type: String,
-        required: true,
         default: ""
     },
     skills: [{
