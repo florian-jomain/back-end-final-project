@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const Helper = require('../models/Helper');
 const Charity = require('../models/Charity');
 const Project = require('../models/Project');
+const Tag = require('../models/Tag');
 const upload = require("../config/cloudinaryConfig");
 
 const salt = 10;
@@ -55,6 +56,16 @@ router.post("/signin", (req, res, next) => {
     });
 });
 
+router.get('/signup/helper', (req, res, next) => {
+  Tag.find()
+    .then(tags => {
+      res.status(200).json(tags);
+    })
+    .catch(apiError => {
+      res.status(500).json(apiError);
+    })
+})
+
 router.post("/signup/helper", upload.single("image"), (req, res, next) => {
   const {
     email,
@@ -63,6 +74,7 @@ router.post("/signup/helper", upload.single("image"), (req, res, next) => {
     name
   } = req.body;
   const newHelper = {
+    userType: "helper",
     email,
     password,
     username,
@@ -109,13 +121,21 @@ router.post("/signup/charity", upload.single("image"), (req, res, next) => {
     email,
     password,
     username,
-    name
+    name,
+    bio,
+    links,
+    location
   } = req.body;
+
   const newCharity = {
+    userType: "charity",
     email,
     password,
     username,
-    name
+    name,
+    bio,
+    links,
+    location
   };
 
   if (req.file) {

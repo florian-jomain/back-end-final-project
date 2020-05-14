@@ -35,7 +35,7 @@ const helperSchema = new Schema({
         ref: "Project"
     }],
     feedback: String,
-    stars: Number
+    stars: Number,
 });
 
 const Helper = mongoose.model("Helper", helperSchema);
