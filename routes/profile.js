@@ -21,6 +21,8 @@ router.patch('/helpers/:id', upload.single("image"), (req, res, next) => {
                 new: true
             }
         )
+        .populate('id_projects')
+        .populate('skills', 'label')
         .then(apiResponse => {
             res.status(200).json(apiResponse);
         })
@@ -41,6 +43,7 @@ router.patch('/charities/:id', upload.single("image"), (req, res, next) => {
                 new: true
             }
         )
+        .populate('id_projects')
         .then(apiResponse => {
             res.status(200).json(apiResponse);
         })
@@ -51,6 +54,8 @@ router.patch('/charities/:id', upload.single("image"), (req, res, next) => {
 
 router.get('/helpers', (req, res, next) => {
     Helper.find()
+        .populate('id_projects')
+        .populate('skills', 'label')
         .then(apiResponse => {
             res.status(200).json(apiResponse);
         })
@@ -61,6 +66,7 @@ router.get('/helpers', (req, res, next) => {
 
 router.get('/charities', (req, res, next) => {
     Charity.find()
+        .populate('id_projects')
         .then(apiResponse => {
             res.status(200).json(apiResponse);
         })

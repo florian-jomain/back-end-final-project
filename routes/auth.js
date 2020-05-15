@@ -71,14 +71,30 @@ router.post("/signup/helper", upload.single("image"), (req, res, next) => {
     email,
     password,
     username,
-    name
+    name,
+    skills,
+    bio,
+    location,
+    phone,
+    links,
+    id_projects,
+    feedback,
+    stars
   } = req.body;
   const newHelper = {
     userType: "helper",
     email,
     password,
     username,
-    name
+    name,
+    skills,
+    bio,
+    location,
+    phone,
+    links,
+    id_projects,
+    feedback,
+    stars
   };
 
   if (req.file) {
@@ -124,7 +140,8 @@ router.post("/signup/charity", upload.single("image"), (req, res, next) => {
     name,
     bio,
     links,
-    location
+    location,
+    id_projects
   } = req.body;
 
   const newCharity = {
@@ -135,7 +152,8 @@ router.post("/signup/charity", upload.single("image"), (req, res, next) => {
     name,
     bio,
     links,
-    location
+    location,
+    id_projects
   };
 
   if (req.file) {

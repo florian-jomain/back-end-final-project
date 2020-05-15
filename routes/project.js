@@ -14,6 +14,8 @@ const Project = require("../models/Project");
 router.get('/', (req, res, next) => {
     Project.find()
         .populate('id_tags', 'label')
+        .populate('id_owner')
+        .populate('id_teamMembers')
         .then(apiResponse => {
             res.status(200).json(apiResponse);
         })
@@ -25,6 +27,8 @@ router.get('/', (req, res, next) => {
 router.get('/:id', (req, res, next) => {
     Project.findById(req.params.id)
         .populate('id_tags', 'label')
+        .populate('id_owner')
+        .populate('id_teamMembers')
         .then(apiResponse => {
             res.status(200).json(apiResponse);
         })
@@ -42,14 +46,24 @@ router.post('/', upload.single("image"), (req, res, next) => {
         title,
         description,
         category,
-        id_tags
+        id_tags,
+        id_owner,
+        id_teamMembers,
+        location,
+        frequency,
+        status
     } = req.body;
 
     const newProject = {
         title,
         description,
         category,
-        id_tags
+        id_tags,
+        id_owner,
+        id_teamMembers,
+        location,
+        frequency,
+        status
     }
 
     if (req.file) {
