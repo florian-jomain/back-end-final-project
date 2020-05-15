@@ -13,6 +13,7 @@ const Project = require("../models/Project");
 
 router.get('/', (req, res, next) => {
     Project.find()
+        .populate('id_tags', 'label')
         .then(apiResponse => {
             res.status(200).json(apiResponse);
         })
@@ -23,6 +24,7 @@ router.get('/', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
     Project.findById(req.params.id)
+        .populate('id_tags', 'label')
         .then(apiResponse => {
             res.status(200).json(apiResponse);
         })
