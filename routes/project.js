@@ -37,7 +37,7 @@ router.get('/:id', (req, res, next) => {
         })
 });
 
-router.post('/', upload.single("image"), (req, res, next) => {
+router.post('/create', upload.single("image"), (req, res, next) => {
     // if (!req.body) {
     //     res.send
     // } // Validate req.body 
