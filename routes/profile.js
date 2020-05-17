@@ -31,6 +31,30 @@ router.patch('/helpers/:id', upload.single("image"), (req, res, next) => {
         })
 });
 
+router.patch('/helpers/create/:id', upload.single("image"), (req, res, next) => {
+    console.log(req.body)
+    if (req.file) {
+        req.body.image = req.file.secure_url;
+    }
+
+    req.body.links = req.body.links.split(",")
+
+    Helper.findByIdAndUpdate(
+            req.params.id,
+            req.body, {
+                new: true
+            }
+        )
+        // .populate('id_projects')
+        // .populate('skills', 'label')
+        .then(apiResponse => {
+            res.status(200).json(apiResponse);
+        })
+        .catch(apiError => {
+            res.status(500).json(apiError);
+        })
+});
+
 router.patch('/charities/:id', upload.single("image"), (req, res, next) => {
 
     if (req.file) {
@@ -44,6 +68,31 @@ router.patch('/charities/:id', upload.single("image"), (req, res, next) => {
             }
         )
         .populate('id_projects')
+        .then(apiResponse => {
+            res.status(200).json(apiResponse);
+        })
+        .catch(apiError => {
+            res.status(500).json(apiError);
+        })
+});
+
+router.patch('/charities/create/:id', upload.single("image"), (req, res, next) => {
+    console.log(req.body)
+    if (req.file) {
+        req.body.image = req.file.secure_url;
+    }
+    if (req.body.links){
+        req.body.links = req.body.links.split(",")
+    }
+
+    Charity.findByIdAndUpdate(
+            req.params.id,
+            req.body, {
+                new: true
+            }
+        )
+        // .populate('id_projects')
+        // .populate('skills', 'label')
         .then(apiResponse => {
             res.status(200).json(apiResponse);
         })
