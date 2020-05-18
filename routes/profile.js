@@ -38,6 +38,7 @@ router.patch('/helpers/create/:id', upload.single("image"), (req, res, next) => 
     }
 
     req.body.links = req.body.links.split(",")
+    req.body.skills = req.body.skills.split(",")
 
     Helper.findByIdAndUpdate(
             req.params.id,

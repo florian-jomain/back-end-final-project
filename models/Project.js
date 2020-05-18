@@ -14,11 +14,7 @@ const projectSchema = new Schema({
         type: String,
         required: true
     },
-    id_tags: [{
-        type: Schema.Types.ObjectId,
-        ref: "Tag",
-        required: true
-    }],
+    skills: [String],
     category: {
         type: String,
         required: true,

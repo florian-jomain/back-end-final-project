@@ -46,7 +46,7 @@ router.post('/create', upload.single("image"), (req, res, next) => {
         title,
         description,
         category,
-        id_tags,
+        skills,
         id_owner,
         id_teamMembers,
         location,
@@ -58,7 +58,7 @@ router.post('/create', upload.single("image"), (req, res, next) => {
         title,
         description,
         category,
-        id_tags,
+        skills,
         id_owner,
         id_teamMembers,
         location,
@@ -69,6 +69,8 @@ router.post('/create', upload.single("image"), (req, res, next) => {
     if (req.file) {
         newProject.image = req.file.secure_url;
     }
+    newProject.id_owner = req.session.currentUser._id
+    newProject.skills = newProject.skills.split(",")
 
     Project.create(newProject)
         .then(apiResponse => {
