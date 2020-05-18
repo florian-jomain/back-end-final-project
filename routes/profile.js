@@ -45,6 +45,13 @@ router.patch('/helpers/:id', upload.single("image"), (req, res, next) => {
     if (req.file) {
         req.body.image = req.file.secure_url;
     }
+    if (req.body.links){
+        req.body.links = req.body.links.split(",")
+    }
+    
+    if (req.body.skills){
+        req.body.skills = req.body.skills.split(",")
+    }
 
     Helper.findByIdAndUpdate(
             req.params.id,
