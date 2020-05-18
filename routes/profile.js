@@ -9,6 +9,36 @@ const upload = require("../config/cloudinaryConfig");
 const Helper = require("../models/Helper");
 const Charity = require("../models/Charity");
 
+router.patch('/helpers/create/', upload.single("image"), (req, res, next) => {
+    
+    if (req.file) {
+        req.body.image = req.file.secure_url;
+    }
+    if (req.body.links){
+        req.body.links = req.body.links.split(",")
+    }
+    console.log(req.body)
+    console.log(req.params.id)
+    console.log(req.file)
+
+    Helper.findByIdAndUpdate(
+        
+            req.session.currentUser._id,
+            req.body, {
+                new: true
+            }
+        )
+        // .populate('id_projects')
+        // .populate('skills', 'label')
+        .then(apiResponse => {
+            res.status(200).json(apiResponse);
+        })
+        .catch(apiError => {
+            console.log(apiError)
+            res.status(500).json(apiError);
+        })
+});
+
 router.patch('/helpers/:id', upload.single("image"), (req, res, next) => {
 
     if (req.file) {
@@ -31,29 +61,7 @@ router.patch('/helpers/:id', upload.single("image"), (req, res, next) => {
         })
 });
 
-router.patch('/helpers/create/:id', upload.single("image"), (req, res, next) => {
-    console.log(req.body)
-    if (req.file) {
-        req.body.image = req.file.secure_url;
-    }
 
-    req.body.links = req.body.links.split(",")
-
-    Helper.findByIdAndUpdate(
-            req.params.id,
-            req.body, {
-                new: true
-            }
-        )
-        // .populate('id_projects')
-        // .populate('skills', 'label')
-        .then(apiResponse => {
-            res.status(200).json(apiResponse);
-        })
-        .catch(apiError => {
-            res.status(500).json(apiError);
-        })
-});
 
 router.patch('/charities/:id', upload.single("image"), (req, res, next) => {
 

@@ -16,11 +16,10 @@ const helperSchema = new Schema({
     },
     name: {
         type: String,
-        required: true
     },
     image: {
         type: String,
-        default: ""
+        default: "https://images.pexels.com/photos/3563888/pexels-photo-3563888.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
     },
     skills: [{
         type: Schema.Types.ObjectId,
