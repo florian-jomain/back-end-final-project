@@ -17,9 +17,10 @@ router.patch('/helpers/create/', upload.single("image"), (req, res, next) => {
     if (req.body.links){
         req.body.links = req.body.links.split(",")
     }
-    console.log(req.body)
-    console.log(req.params.id)
-    console.log(req.file)
+    
+    if (req.body.skills){
+        req.body.skills = req.body.skills.split(",")
+    }
 
     Helper.findByIdAndUpdate(
         
@@ -61,6 +62,30 @@ router.patch('/helpers/:id', upload.single("image"), (req, res, next) => {
         })
 });
 
+router.patch('/charities/create/', upload.single("image"), (req, res, next) => {
+    if (req.file) {
+        req.body.image = req.file.secure_url;
+    }
+    if (req.body.links){
+        req.body.links = req.body.links.split(",")
+    }
+
+    Charity.findByIdAndUpdate(
+        req.session.currentUser._id,
+            req.body, {
+                new: true
+            }
+        )
+        // .populate('id_projects')
+        // .populate('skills', 'label')
+        .then(apiResponse => {
+            res.status(200).json(apiResponse);
+        })
+        .catch(apiError => {
+            res.status(500).json(apiError);
+        })
+});
+
 
 
 router.patch('/charities/:id', upload.single("image"), (req, res, next) => {
@@ -84,30 +109,7 @@ router.patch('/charities/:id', upload.single("image"), (req, res, next) => {
         })
 });
 
-router.patch('/charities/create/:id', upload.single("image"), (req, res, next) => {
-    console.log(req.body)
-    if (req.file) {
-        req.body.image = req.file.secure_url;
-    }
-    if (req.body.links){
-        req.body.links = req.body.links.split(",")
-    }
 
-    Charity.findByIdAndUpdate(
-            req.params.id,
-            req.body, {
-                new: true
-            }
-        )
-        // .populate('id_projects')
-        // .populate('skills', 'label')
-        .then(apiResponse => {
-            res.status(200).json(apiResponse);
-        })
-        .catch(apiError => {
-            res.status(500).json(apiError);
-        })
-});
 
 router.get('/helpers', (req, res, next) => {
     Helper.find()
