@@ -13,7 +13,6 @@ const Project = require("../models/Project");
 
 router.get('/', (req, res, next) => {
     Project.find()
-        .populate('id_tags', 'label')
         .populate('id_owner')
         .populate('id_teamMembers')
         .then(apiResponse => {
