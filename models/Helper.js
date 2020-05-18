@@ -19,6 +19,7 @@ const helperSchema = new Schema({
     },
     image: {
         type: String,
+        default: '../../media/avatar.png',
     },
     skills: [String],
     bio: String,
