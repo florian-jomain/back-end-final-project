@@ -127,8 +127,8 @@ router.post("/signup/helper", upload.single("image"), (req, res, next) => {
         delete helperObj.password;
         req.session.currentUser = helperObj;
         res.status(201).json(helperObj);
-        console.log("i'm here" + helperObj)
-        
+        // console.log("i'm here" + helperObj)
+
       })
     })
   })

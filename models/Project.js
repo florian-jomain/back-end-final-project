@@ -36,10 +36,13 @@ const projectSchema = new Schema({
     status: {
         type: String,
         enum: ["Full", "Open", "Completed"]
-    }
+    },
+    id_applications: [{
+        type: Schema.Types.ObjectId,
+        ref: "Application"
+    }]
 });
 
 const Project = mongoose.model("Project", projectSchema);
 
 module.exports = Project;
-
