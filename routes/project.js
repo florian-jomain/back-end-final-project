@@ -10,11 +10,13 @@ const express = require("express");
 const router = express.Router();
 const upload = require("../config/cloudinaryConfig");
 const Project = require("../models/Project");
+const Application = require("../models/Application");
 
 router.get('/', (req, res, next) => {
     Project.find()
         .populate('id_owner')
         .populate('id_teamMembers')
+        .populate('id_applications')
         .then(apiResponse => {
             res.status(200).json(apiResponse);
         })
@@ -28,6 +30,7 @@ router.get('/:id', (req, res, next) => {
         .populate('id_tags', 'label')
         .populate('id_owner')
         .populate('id_teamMembers')
+        .populate('id_applications')
         .then(apiResponse => {
             res.status(200).json(apiResponse);
         })
@@ -37,9 +40,11 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.post('/create', upload.single("image"), (req, res, next) => {
-    // if (!req.body) {
-    //     res.send
-    // } // Validate req.body 
+    if (!req.body) {
+        res.status(500).json({
+            message: 'No data can be displayed'
+        })
+    }
 
     const {
         title,
@@ -72,6 +77,22 @@ router.post('/create', upload.single("image"), (req, res, next) => {
     newProject.skills = newProject.skills.split(",")
 
     Project.create(newProject)
+        .then(apiResponse => {
+            res.status(201).json(apiResponse);
+        })
+        .catch(apiError => {
+            res.status(500).json(apiError);
+        })
+})
+
+router.post('/:id', (req, res, next) => {
+    if (!req.body) {
+        res.status(500).json({
+            message: 'No data can be displayed'
+        })
+    }
+    console.log(req.body);
+    Application.create(req.body)
         .then(apiResponse => {
             res.status(201).json(apiResponse);
         })
