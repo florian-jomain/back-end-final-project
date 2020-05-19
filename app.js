@@ -15,7 +15,7 @@ const cors = require("cors");
  * Middlewares
  */
 const corsOptions = {
-  origin: process.env.FRONTEND_URL,
+  origin: "https: //dev43-front-end.now.sh/",
   credentials: true
 };
 app.use(cors(corsOptions));
