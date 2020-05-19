@@ -10,20 +10,20 @@ const Helper = require("../models/Helper");
 const Charity = require("../models/Charity");
 
 router.patch('/helpers/create/', upload.single("image"), (req, res, next) => {
-    
+
     if (req.file) {
         req.body.image = req.file.secure_url;
     }
-    if (req.body.links){
+    if (req.body.links) {
         req.body.links = req.body.links.split(",")
     }
-    
-    if (req.body.skills){
+
+    if (req.body.skills) {
         req.body.skills = req.body.skills.split(",")
     }
 
     Helper.findByIdAndUpdate(
-        
+
             req.session.currentUser._id,
             req.body, {
                 new: true
@@ -45,11 +45,11 @@ router.patch('/helpers/:id', upload.single("image"), (req, res, next) => {
     if (req.file) {
         req.body.image = req.file.secure_url;
     }
-    if (req.body.links){
+    if (req.body.links) {
         req.body.links = req.body.links.split(",")
     }
-    
-    if (req.body.skills){
+
+    if (req.body.skills) {
         req.body.skills = req.body.skills.split(",")
     }
 
@@ -73,12 +73,12 @@ router.patch('/charities/create/', upload.single("image"), (req, res, next) => {
     if (req.file) {
         req.body.image = req.file.secure_url;
     }
-    if (req.body.links){
+    if (req.body.links) {
         req.body.links = req.body.links.split(",")
     }
 
     Charity.findByIdAndUpdate(
-        req.session.currentUser._id,
+            req.session.currentUser._id,
             req.body, {
                 new: true
             }
@@ -121,7 +121,6 @@ router.patch('/charities/:id', upload.single("image"), (req, res, next) => {
 router.get('/helpers', (req, res, next) => {
     Helper.find()
         .populate('id_projects')
-        .populate('skills', 'label')
         .then(apiResponse => {
             res.status(200).json(apiResponse);
         })
