@@ -15,7 +15,7 @@ const cors = require("cors");
  * Middlewares
  */
 const corsOptions = {
-  origin: "https: //dev43-front-end.now.sh/",
+  origin: process.env.FRONTEND_URL,
   credentials: true
 };
 app.use(cors(corsOptions));
@@ -38,10 +38,10 @@ app.use(
 );
 
 // Test to see if user is logged In before getting into any router.
-// app.use(function (req, res, next) {
-//   console.log(req.session.currentUser);
-//   next();
-// });
+app.use(function (req, res, next) {
+  console.log(req.session.currentUser);
+  next();
+});
 
 /**
  * Routes
