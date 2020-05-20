@@ -82,7 +82,6 @@ router.post("/signup/helper", upload.single("image"), (req, res, next) => {
     stars
   } = req.body;
   const newHelper = {
-    userType: "helper",
     email,
     password,
     username,
@@ -147,7 +146,6 @@ router.post("/signup/charity", upload.single("image"), (req, res, next) => {
   } = req.body;
 
   const newCharity = {
-    userType: "charity",
     email,
     password,
     username,
