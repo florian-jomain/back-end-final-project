@@ -194,6 +194,9 @@ router.post("/signup/charity", upload.single("image"), (req, res, next) => {
 });
 
 router.get("/isLoggedIn", (req, res, next) => {
+  if (!req.session.currentUser) {
+    return null
+  }
   if (req.session.currentUser) {
     const id = req.session.currentUser._id;
     Helper.findById(id)
