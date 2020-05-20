@@ -8,8 +8,9 @@ const router = express.Router();
 const upload = require("../config/cloudinaryConfig");
 const Helper = require("../models/Helper");
 const Charity = require("../models/Charity");
+const requireAuth = require("../middlewares/requireAuth");
 
-router.patch('/helpers/create/', upload.single("image"), (req, res, next) => {
+router.patch('/helpers/create/', requireAuth, upload.single("image"), (req, res, next) => {
 
     if (req.file) {
         req.body.image = req.file.secure_url;
@@ -40,7 +41,7 @@ router.patch('/helpers/create/', upload.single("image"), (req, res, next) => {
         })
 });
 
-router.patch('/helpers/:id', upload.single("image"), (req, res, next) => {
+router.patch('/helpers/:id', requireAuth, upload.single("image"), (req, res, next) => {
 
     if (req.file) {
         req.body.image = req.file.secure_url;
@@ -69,7 +70,7 @@ router.patch('/helpers/:id', upload.single("image"), (req, res, next) => {
         })
 });
 
-router.patch('/charities/create/', upload.single("image"), (req, res, next) => {
+router.patch('/charities/create/', requireAuth, upload.single("image"), (req, res, next) => {
     if (req.file) {
         req.body.image = req.file.secure_url;
     }
@@ -95,7 +96,7 @@ router.patch('/charities/create/', upload.single("image"), (req, res, next) => {
 
 
 
-router.patch('/charities/:id', upload.single("image"), (req, res, next) => {
+router.patch('/charities/:id', requireAuth, upload.single("image"), (req, res, next) => {
 
     if (req.file) {
         req.body.image = req.file.secure_url;
