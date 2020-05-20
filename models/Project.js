@@ -17,7 +17,6 @@ const projectSchema = new Schema({
     skills: [String],
     category: {
         type: String,
-        required: true,
         enum: ["Equality", "Poverty", "Environment", "Animals", "Arts", "Education", "Covid-19"]
     },
     id_owner: {
