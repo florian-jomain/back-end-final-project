@@ -11,6 +11,7 @@ const router = express.Router();
 const upload = require("../config/cloudinaryConfig");
 const Project = require("../models/Project");
 const Application = require("../models/Application");
+const requireAuth = require("../middlewares/requireAuth");
 
 router.get('/', (req, res, next) => {
     Project.find()
@@ -40,7 +41,7 @@ router.get('/:id', (req, res, next) => {
         })
 });
 
-router.post('/create', upload.single("image"), (req, res, next) => {
+router.post('/create', requireAuth, upload.single("image"), (req, res, next) => {
     if (!req.body) {
         res.status(500).json({
             message: 'No data can be displayed'
@@ -86,7 +87,7 @@ router.post('/create', upload.single("image"), (req, res, next) => {
         })
 })
 
-router.post('/:id', (req, res, next) => {
+router.post('/:id', requireAuth, (req, res, next) => {
     if (!req.body) {
         res.status(500).json({
             message: 'No data can be displayed'
@@ -102,7 +103,7 @@ router.post('/:id', (req, res, next) => {
         })
 })
 
-router.patch('/:id', (req, res, next) => {
+router.patch('/:id', requireAuth, (req, res, next) => {
     Project.findByIdAndUpdate(
             req.params.id,
             req.body, {
@@ -117,7 +118,7 @@ router.patch('/:id', (req, res, next) => {
         })
 })
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', requireAuth, (req, res, next) => {
     Project.findByIdAndRemove(req.params.id)
         .then(apiResponse => {
             if (apiResponse === null) {

@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const Tag = require("../models/Tag");
-// const requireAuth = require("../middlewares/requireAuth");
+const requireAuth = require("../middlewares/requireAuth");
 
-router.post("/", (req, res, next) => {
+router.post("/", requireAuth, (req, res, next) => {
     Tag.findOne(req.body)
         .then(apiResponse => {
             if (!apiResponse) {
