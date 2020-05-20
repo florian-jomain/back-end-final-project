@@ -79,7 +79,8 @@ router.post("/signup/helper", upload.single("image"), (req, res, next) => {
     links,
     id_projects,
     feedback,
-    stars
+    stars,
+    userType
   } = req.body;
   const newHelper = {
     email,
@@ -93,7 +94,8 @@ router.post("/signup/helper", upload.single("image"), (req, res, next) => {
     links,
     id_projects,
     feedback,
-    stars
+    stars,
+    userType
   };
 
   if (req.file) {
@@ -126,8 +128,6 @@ router.post("/signup/helper", upload.single("image"), (req, res, next) => {
         delete helperObj.password;
         req.session.currentUser = helperObj;
         res.status(201).json(helperObj);
-        // console.log("i'm here" + helperObj)
-
       })
     })
   })
@@ -142,7 +142,8 @@ router.post("/signup/charity", upload.single("image"), (req, res, next) => {
     bio,
     links,
     location,
-    id_projects
+    id_projects,
+    userType
   } = req.body;
 
   const newCharity = {
@@ -153,7 +154,8 @@ router.post("/signup/charity", upload.single("image"), (req, res, next) => {
     bio,
     links,
     location,
-    id_projects
+    id_projects,
+    userType
   };
 
   if (req.file) {
@@ -197,6 +199,7 @@ router.get("/isLoggedIn", (req, res, next) => {
     Helper.findById(id)
       .then((helperDocument) => {
         if (helperDocument) {
+          console.log("Je suis le helper document", helperDocument)
           const helperObj = helperDocument.toObject();
           delete helperObj.password;
           res.status(200).json(helperObj);
