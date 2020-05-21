@@ -14,24 +14,17 @@ const requireAuth = require('../middlewares/requireAuth')
 router.get('/user/:id', async (req, res, next) => {
   const id = req.params.id
   try {
-    let helper = await findHelper(id)
-    if (!helper) {
-      helper = await findCharity(id)
+    let user = await Helper.findById(id).populate("id_projects")
+    
+    if (!user) {
+      user = await Charity.findById(id).populate("id_projects")
     }
-    res.status(200).json(helper)
+    res.status(200).json(user)
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
   }
 })
-
-function findHelper(id) {
-  return Helper.findById(id).populate(id_projects)
-}
-
-function findCharity(id) {
-  return Charity.findById(id).populate(id_projects)
-}
 
 router.patch(
   '/helpers/create/',

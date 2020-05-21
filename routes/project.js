@@ -10,6 +10,7 @@ const express = require("express");
 const router = express.Router();
 const upload = require("../config/cloudinaryConfig");
 const Project = require("../models/Project");
+const Charity = require("../models/Charity"); 
 const Application = require("../models/Application");
 const requireAuth = require("../middlewares/requireAuth");
 
@@ -80,6 +81,9 @@ router.post('/create', requireAuth, upload.single("image"), (req, res, next) => 
     Project.create(newProject)
         .then(apiResponse => {
             res.status(201).json(apiResponse);
+            Charity.findByIdAndUpdate(req.session.currentUser._id,{id_projects:[apiResponse._id]})
+            .then(apiRes=>apiRes)
+            .catch(apiErr=>apiErr)
         })
         .catch(apiError => {
             res.status(500).json(apiError);
