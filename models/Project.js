@@ -8,7 +8,7 @@ const projectSchema = new Schema({
     },
     image: {
         type: String,
-        default: ""
+        default: "../../media/avatar-project.png"
     },
     description: {
         type: String,

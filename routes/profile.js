@@ -13,8 +13,8 @@ const requireAuth = require('../middlewares/requireAuth')
 router.patch('/helpers/addProjectToHelper/:id', (req, res, next) => {
   const id = req.params.id
   Helper.findByIdAndUpdate(id, req.body, {
-    new: true,
-  })
+      new: true,
+    })
     // .populate('id_projects')
     // .populate('skills', 'label')
     .then((apiResponse) => {
@@ -59,8 +59,8 @@ router.patch(
     }
 
     Helper.findByIdAndUpdate(req.session.currentUser._id, req.body, {
-      new: true,
-    })
+        new: true,
+      })
       // .populate('id_projects')
       // .populate('skills', 'label')
       .then((apiResponse) => {
@@ -90,8 +90,8 @@ router.patch(
     }
 
     Helper.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    })
+        new: true,
+      })
       .populate('id_projects')
       .populate('skills', 'label')
       .then((apiResponse) => {
@@ -116,8 +116,8 @@ router.patch(
     }
 
     Charity.findByIdAndUpdate(req.session.currentUser._id, req.body, {
-      new: true,
-    })
+        new: true,
+      })
       // .populate('id_projects')
       // .populate('skills', 'label')
       .then((apiResponse) => {
@@ -139,8 +139,8 @@ router.patch(
     }
 
     Charity.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    })
+        new: true,
+      })
       .populate('id_projects')
       .then((apiResponse) => {
         res.status(200).json(apiResponse)
