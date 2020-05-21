@@ -113,7 +113,7 @@ router.post('/:id', requireAuth, (req, res, next) => {
     })
 })
 
-router.patch('/:id', requireAuth, (req, res, next) => {
+router.patch('/:id', requireAuth, upload.single('image'), (req, res, next) => {
   Project.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   })
