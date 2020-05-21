@@ -113,6 +113,10 @@ router.patch('/:id', requireAuth, (req, res, next) => {
                 new: true
             }
         )
+        .populate('id_tags', 'label')
+        .populate('id_owner')
+        .populate('id_teamMembers')
+        .populate('id_applications')
         .then(apiResponse => {
             res.status(200).json(apiResponse);
         })
