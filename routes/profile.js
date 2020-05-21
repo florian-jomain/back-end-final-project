@@ -15,7 +15,7 @@ router.get('/user/:id', async (req, res, next) => {
   const id = req.params.id
   try {
     let user = await Helper.findById(id).populate("id_projects")
-    
+
     if (!user) {
       user = await Charity.findById(id).populate("id_projects")
     }
