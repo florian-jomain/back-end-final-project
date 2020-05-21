@@ -10,14 +10,30 @@ const Helper = require('../models/Helper')
 const Charity = require('../models/Charity')
 const requireAuth = require('../middlewares/requireAuth')
 
+router.patch('/helpers/addProjectToHelper/:id', (req, res, next) => {
+  const id = req.params.id
+  Helper.findByIdAndUpdate(id, req.body, {
+    new: true,
+  })
+    // .populate('id_projects')
+    // .populate('skills', 'label')
+    .then((apiResponse) => {
+      res.status(200).json(apiResponse)
+    })
+    .catch((apiError) => {
+      console.log(apiError)
+      res.status(500).json(apiError)
+    })
+})
+
 // GET ONE HELPER
 router.get('/user/:id', async (req, res, next) => {
   const id = req.params.id
   try {
-    let user = await Helper.findById(id).populate("id_projects")
-    
+    let user = await Helper.findById(id).populate('id_projects')
+
     if (!user) {
-      user = await Charity.findById(id).populate("id_projects")
+      user = await Charity.findById(id).populate('id_projects')
     }
     res.status(200).json(user)
   } catch (error) {
@@ -43,8 +59,8 @@ router.patch(
     }
 
     Helper.findByIdAndUpdate(req.session.currentUser._id, req.body, {
-        new: true,
-      })
+      new: true,
+    })
       // .populate('id_projects')
       // .populate('skills', 'label')
       .then((apiResponse) => {
@@ -74,8 +90,8 @@ router.patch(
     }
 
     Helper.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-      })
+      new: true,
+    })
       .populate('id_projects')
       .populate('skills', 'label')
       .then((apiResponse) => {
@@ -100,8 +116,8 @@ router.patch(
     }
 
     Charity.findByIdAndUpdate(req.session.currentUser._id, req.body, {
-        new: true,
-      })
+      new: true,
+    })
       // .populate('id_projects')
       // .populate('skills', 'label')
       .then((apiResponse) => {
@@ -123,8 +139,8 @@ router.patch(
     }
 
     Charity.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-      })
+      new: true,
+    })
       .populate('id_projects')
       .then((apiResponse) => {
         res.status(200).json(apiResponse)
