@@ -114,7 +114,32 @@ router.post('/:id', requireAuth, (req, res, next) => {
 })
 
 router.patch('/:id', requireAuth, upload.single('image'), (req, res, next) => {
-  Project.findByIdAndUpdate(req.params.id, req.body, {
+  const {
+    title,
+    description,
+    category,
+    skills,
+    location,
+    frequency,
+    status,
+  } = req.body
+
+  const newProject = {
+    title,
+    description,
+    category,
+    skills,
+    location,
+    frequency,
+    status,
+  }
+
+  if (req.file) {
+    newProject.image = req.file.secure_url
+  }
+  newProject.skills = newProject.skills.split(',')
+
+  Project.findByIdAndUpdate(req.params.id, newProject, {
     new: true,
   })
     .populate('id_tags', 'label')
