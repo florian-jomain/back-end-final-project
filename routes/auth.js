@@ -202,7 +202,6 @@ router.get("/isLoggedIn", (req, res, next) => {
     Helper.findById(id)
       .then((helperDocument) => {
         if (helperDocument) {
-          console.log("Je suis le helper document", helperDocument)
           const helperObj = helperDocument.toObject();
           delete helperObj.password;
           res.status(200).json(helperObj);

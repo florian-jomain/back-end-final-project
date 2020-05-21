@@ -26,11 +26,11 @@ router.get('/user/:id', async (req, res, next) => {
 })
 
 function findHelper(id) {
-  return Helper.findById(id)
+  return Helper.findById(id).populate(id_projects)
 }
 
 function findCharity(id) {
-  return Charity.findById(id)
+  return Charity.findById(id).populate(id_projects)
 }
 
 router.patch(
@@ -50,8 +50,8 @@ router.patch(
     }
 
     Helper.findByIdAndUpdate(req.session.currentUser._id, req.body, {
-      new: true,
-    })
+        new: true,
+      })
       // .populate('id_projects')
       // .populate('skills', 'label')
       .then((apiResponse) => {
@@ -81,8 +81,8 @@ router.patch(
     }
 
     Helper.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    })
+        new: true,
+      })
       .populate('id_projects')
       .populate('skills', 'label')
       .then((apiResponse) => {
@@ -107,8 +107,8 @@ router.patch(
     }
 
     Charity.findByIdAndUpdate(req.session.currentUser._id, req.body, {
-      new: true,
-    })
+        new: true,
+      })
       // .populate('id_projects')
       // .populate('skills', 'label')
       .then((apiResponse) => {
@@ -130,8 +130,8 @@ router.patch(
     }
 
     Charity.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    })
+        new: true,
+      })
       .populate('id_projects')
       .then((apiResponse) => {
         res.status(200).json(apiResponse)
