@@ -86,8 +86,10 @@ router.post(
       .then((apiResponse) => {
         res.status(201).json(apiResponse)
         Charity.findByIdAndUpdate(req.session.currentUser._id, {
-          $push: { id_projects: apiResponse._id },
-        })
+            $push: {
+              id_projects: apiResponse._id
+            },
+          })
           .then((apiRes) => apiRes)
           .catch((apiErr) => apiErr)
       })
@@ -103,7 +105,6 @@ router.post('/:id', requireAuth, (req, res, next) => {
       message: 'No data can be displayed',
     })
   }
-  console.log(req.body)
   Application.create(req.body)
     .then((apiResponse) => {
       res.status(201).json(apiResponse)
@@ -140,8 +141,8 @@ router.patch('/:id', requireAuth, upload.single('image'), (req, res, next) => {
   newProject.skills = newProject.skills.split(',')
 
   Project.findByIdAndUpdate(req.params.id, newProject, {
-    new: true,
-  })
+      new: true,
+    })
     .populate('id_tags', 'label')
     .populate('id_owner')
     .populate('id_teamMembers')
